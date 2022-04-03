@@ -4,12 +4,15 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx ts-node server.ts"
   },
   "author": "Daniel-Davidyan",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^17.0.21"
+  },
+  "dependencies": {
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.2"
   }
 }
-

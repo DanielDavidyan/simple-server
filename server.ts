@@ -1,34 +1,14 @@
+import {requestsResolver} from "./utilities/server.utils";
+import {IncomingMessage, ServerResponse} from "http";
+
 const http = require('http');
-const fs = require('fs');
+const PORT = process.env.PORT || 8080;
 
-let content;
-let lastModified;
-const dirPath = '/Users/danieldavidyan/Documents/ofek/server/simple-server/';
-const contentPath = dirPath + 'content.txt';
-const packageJsonPath = dirPath + 'package.json';
-
-fs.readFile(contentPath, 'utf-8', (err, data) => {
-    if (err) {
-        console.log(err);
-    }
-    content = data.toUpperCase();
-})
-
-fs.stat(packageJsonPath, (err, stats) => {
-    if (err) {
-        console.log(err);
-    }
-    lastModified = stats.mtime.toString();
-})
-
-http.createServer(function (req, res) {
+http.createServer(function (req: IncomingMessage, res: ServerResponse) {
+    res.writeHead(200);
     let postUrl = req.url;
-    if (postUrl === '/content') {
-        res.write(content);
+    if (requestsResolver[<string>postUrl] && req.method === 'GET') {
+        requestsResolver[<string>postUrl](res);
     }
-    if (postUrl === '/updateTime') {
-        res.write(lastModified);
-    }
-    res.end();
-}).listen(8080);
 
+}).listen(PORT, () => console.log("Server listening on port 8080"));
