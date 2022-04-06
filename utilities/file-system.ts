@@ -1,8 +1,9 @@
-import {PathLike, promises} from "fs";
+import * as fs from "fs";
+import {PathLike, Stats} from "fs";
 import {resolve} from "path";
 
 const contentPath = resolve(__dirname, '../package.json');
 
-export async function statAsync(path: PathLike = contentPath): Promise<any> {
-    return (await promises.stat(path)).mtime.toString();
+export async function statSync(path: PathLike = contentPath): Promise<Stats> {
+    return fs.statSync(path);
 }

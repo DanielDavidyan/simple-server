@@ -1,14 +1,15 @@
 import {requestsResolver} from "./utilities/server.utils";
-import {IncomingMessage, ServerResponse} from "http";
+import * as http from "http";
 
-const http = require('http');
-const PORT = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 
-http.createServer(function (req: IncomingMessage, res: ServerResponse) {
-    res.writeHead(200);
-    let postUrl = req.url;
-    if (requestsResolver[<string>postUrl] && req.method === 'GET') {
-        requestsResolver[<string>postUrl](res);
+http.createServer( (req: http.IncomingMessage, res: http.ServerResponse) =>{
+    const method = req.method ?? '';
+    const postUrl = req.url ?? '';
+    if (requestsResolver[method!][postUrl!]) {
+        requestsResolver[method!][postUrl!](res);
+    } else {
+        res.writeHead(404);
+        res.end();
     }
-
-}).listen(PORT, () => console.log("Server listening on port 8080"));
+}).listen(port, () => console.log("Server listening on port 8080"));
