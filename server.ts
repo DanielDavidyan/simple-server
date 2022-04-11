@@ -3,7 +3,7 @@ import * as http from "http";
 
 const port = process.env.PORT || 8080;
 
-http.createServer( (req: http.IncomingMessage, res: http.ServerResponse) =>{
+http.createServer((req: http.IncomingMessage, res: http.ServerResponse) => {
     const method = req.method ?? '';
     const postUrl = req.url ?? '';
     if (requestsResolver[method][postUrl]) {
